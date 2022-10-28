@@ -17,7 +17,7 @@ DB_USERNAME=root
 DB_PASSWORD=  
 ```
 
-6.- Insertar el nombre del usuario para consumir la api de los indicadores historicos y poder crear las tablas.
+6.- Insertar en el archivo .env el nombre del usuario para consumir la api de los indicadores historicos y poder crear las tablas cons sus datos automaticamente.
 
 ```php
 USUARIO_SOLUTORIA = micorreo@gmail.com
