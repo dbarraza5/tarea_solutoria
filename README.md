@@ -5,7 +5,7 @@ Requisitos del ambiente:
 Instalar:  
 1.- Composer install (dentro de la carpeta del proyecto).  
 2.- Crear un archivo vacío de sqlite para la base datos.  
-3.- configurar el archivo .env. tipo conexión y la ruta de la base datos.  
+3.- configurar el archivo .env (Crear el archivo sino existe). tipo conexión y la ruta de la base datos.  
 ```php
 DB_CONNECTION=sqlite  
 DB_HOST=127.0.0.1  
