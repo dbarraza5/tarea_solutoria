@@ -1,4 +1,4 @@
-Requisitos del ambiente:  
+Requisitos del ambiente LARAVEL 8:  
 1.- PHP 7.  
 2.- Composer.
 
