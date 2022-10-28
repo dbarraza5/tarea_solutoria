@@ -4,8 +4,10 @@ Requisitos del ambiente:
 
 Instalar:  
 1.- Composer install (dentro de la carpeta del proyecto).  
-2.- Crear un archivo vacío de sqlite para la base datos.  
-3.- configurar el archivo .env (Crear el archivo sino existe). tipo conexión y la ruta de la base datos.  
+2.- Renombrar el archivo ".env.example" to ".env".  
+3.- php artisan key:generate.  
+4.- Crear un archivo vacío de sqlite para la base datos.  
+5.- Cambiar el tipo conexión y la ruta de la base datos.  
 ```php
 DB_CONNECTION=sqlite  
 DB_HOST=127.0.0.1  
@@ -15,12 +17,12 @@ DB_USERNAME=root
 DB_PASSWORD=  
 ```
 
-4.- Insertar el nombre del usuario para consumir la api de los indicadores historicos y poder crear las tablas.
+6.- Insertar el nombre del usuario para consumir la api de los indicadores historicos y poder crear las tablas.
 
 ```php
 USUARIO_SOLUTORIA = micorreo@gmail.com
 ```  
-5.- hacer la migración la base datos. 
+7.- hacer la migración la base datos. 
 
 ```php
 php artisan migrate
