@@ -1,11 +1,8 @@
 @extends('base', ['titulo' => 'dashboard'])
 
 @section('content')
-    <div class="container-xxl">
-        <h1> vamos aver si funciona</h1>
-
-
-
+    <div class="">
+        <h1>Indicadores Historicos</h1>
         <table class="table">
             <thead>
             <tr>
@@ -34,8 +31,9 @@
                     <td>{{$indicador->origenIndicador}}</td>
                     <td>
                         <div class="btn-group btn-group-sm" role="group" aria-label="Basic outlined example">
-                            <button type="button" class="btn btn-outline-primary" >
-                                <i class="bi bi-pencil"></i>
+                            <button type="button" class="btn btn-outline-primary"
+                                    onclick="redireccion({{$indicador->id}})">
+                                <i class="bi bi-pencil" ></i>
                             </button>
                             <!--button type="button" class="btn btn-outline-primary"><i class="bi bi-files"></i></--button-->
                             <button type="button" class="btn btn-outline-primary"

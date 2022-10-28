@@ -9,4 +9,6 @@ class UF_Historico extends Model
 {
     use HasFactory;
     protected $table = 'uf_historico';
+    protected $fillable = ["tipo_indicador", "valorIndicador", "fechaIndicador",
+        "tiempoIndicador", "origenIndicador"];
 }

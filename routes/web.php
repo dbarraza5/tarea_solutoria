@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\IndicadorController;
 use App\Models\UF_Historico;
+use App\Models\TipoIndicador;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Validator;
 
 
 /*
@@ -20,33 +22,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+
     return view('welcome');
 });
 
+Route::prefix('indicadores')->group(function () {
+    Route::get('/', [IndicadorController::class, "index"])
+        ->name("indicadores");
 
-Route::get('/indicadores', function () {
-    $indicadores  = UF_Historico::simplePaginate(15);
-    return view('indicadores.indicadores')->with("indicadores", $indicadores);
-})->name("indicadores");
+    Route::get('/crear', [IndicadorController::class, "indexCrear"])
+        ->name("crear");
 
-Route::get('/actualizar/{id}', function ($id) {
-    $indicador  = UF_Historico::where("id", $id)->first();
-    return view('indicadores.actualizarIndicador')->with("indicador", $indicador);
-})->name("actualizar");
+    Route::get('/actualizar/{id}',  [IndicadorController::class, "indexActualizar"])
+        ->name("actualizar");
 
-Route::post('/eliminar', function (Request $request) {
+    Route::put('/actualizar', [IndicadorController::class, "actualizarRegistro"])->name("actualizar-put");
 
-    $id = $request->get("id");
-    UF_Historico::where('id', $id)->delete();
-    /*try{
-        UF_Historico::where('id', $id)->delete();
-        return [12];
-    }
-    catch (Illuminate\Database\QueryException $e){
-        $error_code = $e->errorInfo[1];
-        return $e->errorInfo;
+    Route::post('/crear',  [IndicadorController::class, "crearRegistro"])->name("crear-put");
 
-    }*/
-    //return redirect()->route("indicadores");
-    return $id;
+    Route::post('/eliminar', [IndicadorController::class, "eliminarRegistro"]);
+
+    Route::get('/grafico', [IndicadorController::class, "indexGrafico"]);
+
+    Route::post('/grafico', [IndicadorController::class, "datosIndicadoresEntreFechas"]);
 });
+

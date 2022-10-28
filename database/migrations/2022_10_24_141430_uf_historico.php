@@ -18,15 +18,16 @@ class UfHistorico extends Migration
 
     public function up()
     {
+        Schema::dropIfExists($this->nombre_tabla_tipo_indicador);
+        Schema::dropIfExists($this->nombre_tabla_uf);
+
         Schema::create($this->nombre_tabla_uf, function (Blueprint $table) {
-            $table->id();
-            $table->string('nombreIndicador');
-            $table->string('codigoIndicador');
-            $table->string('unidadMedidaIndicador');
+            $table->increments('id');
+            $table->string('tipo_indicador');
             $table->float("valorIndicador");
             $table->date("fechaIndicador");
             $table->string("tiempoIndicador")->nullable();
-            $table->string("origenIndicador");
+            $table->string("origenIndicador")->nullable();
             $table->timestamps();
         });
 
@@ -40,7 +41,7 @@ class UfHistorico extends Migration
         });
 
         $response = Http::post('https://postulaciones.solutoria.cl/api/acceso', [
-            'userName' => 'dbarraza4@outlook.com',
+            'userName' => env("USUARIO_SOLUTORIA"),
             'flagJson' => true,
         ]);
         if($response->ok()){
@@ -53,9 +54,49 @@ class UfHistorico extends Migration
             ])->get("https://postulaciones.solutoria.cl/api/indicadores");
 
             $data = $response_db->json();
-            foreach ($data as $registro){
+
+            //creando el conjunto de indicadores para una tabla
+            $conjunto_indicadores = array_unique(array_map(function ($row){
+                return $row["codigoIndicador"];
+            }, $data));
+
+            $conjunto_indicadores = [];
+            $datos_indicadores = [];
+            $contador = 1;
+            for ($i = 0; $i < count($data); $i++) {
+                $row = $data[$i];
+                $codigo = $row["codigoIndicador"];
+                $aux_araay = array_map(function ($e) {
+                    return $e["codigoIndicador"];
+                }, array_values($conjunto_indicadores));
+                if (!in_array($codigo, $aux_araay)) {
+                    $conjunto_indicadores[$codigo] = [
+                        "id" => $contador,
+                        "nombreIndicador" => $row["nombreIndicador"],
+                        "codigoIndicador" => $row["codigoIndicador"],
+                        "unidadMedidaIndicador" => $row["unidadMedidaIndicador"]
+                    ];
+                    $contador++;
+                }
+
+                array_push($datos_indicadores, [
+                    "id" => $row["id"],
+                    "tipo_indicador" => $conjunto_indicadores[$codigo]["id"],
+                    "valorIndicador" => $row["valorIndicador"],
+                    "fechaIndicador" => $row["fechaIndicador"],
+                    "tiempoIndicador"=> $row["tiempoIndicador"],
+                    "origenIndicador"=> $row["origenIndicador"]
+                ]);
+            }
+            foreach ($datos_indicadores as $registro){
                 DB::table($this->nombre_tabla_uf)->insert(
                     $registro
+                );
+            }
+
+            foreach ($conjunto_indicadores as $key => $value){
+                DB::table($this->nombre_tabla_tipo_indicador)->insert(
+                    $value
                 );
             }
         }

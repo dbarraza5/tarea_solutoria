@@ -14,15 +14,40 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono|Inconsolata" rel="stylesheet">
     <!--link href="https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css" rel="stylesheet"-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <script>
+        var URL_= "{{asset('')}}";
+    </script>
 </head>
 <body>
 
 @yield('encabezado')
 
-@yield('content')
+<div class="container-xxl">
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{asset('')}}">Inicio</a>
 
-@include("footer")
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    @yield('content')
+    @include("footer")
+</div>
+
+
+
+
+
 </body>
 
 
