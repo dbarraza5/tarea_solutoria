@@ -7,7 +7,7 @@ Instalar:
 2.- Renombrar el archivo ".env.example" to ".env".  
 3.- php artisan key:generate.  
 4.- Crear un archivo vacío de sqlite para la base datos.  
-5.- Cambiar el tipo conexión y la ruta de la base datos.  
+5.- Cambiar el tipo conexión y la ruta de la base datos en el archivo .env.  
 ```php
 DB_CONNECTION=sqlite  
 DB_HOST=127.0.0.1  
